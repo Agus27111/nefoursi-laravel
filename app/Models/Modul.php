@@ -10,9 +10,9 @@ class Modul extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['title', 'pdf', 'grade_id'];
+    protected $guarded = [];
 
     public function grade(){
-        return $this->belongsTo(Grade::class, 'grade_id' );
+        return $this->belongsTo(Grade::class);
     }
 }

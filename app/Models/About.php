@@ -10,5 +10,9 @@ class About extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['title', 'note', 'image'];
+    protected $guarded = [];
+
+    protected $casts = [
+        'image'=>'array'
+    ];
 }

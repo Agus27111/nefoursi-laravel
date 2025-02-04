@@ -69,9 +69,11 @@ class BlogResource extends Resource
                 Tables\Columns\ImageColumn::make('image'),
                 Tables\Columns\TextColumn::make('content')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('category_id')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('categories.name')
+                    ->label('Categories')
+                    ->sortable()
+                    ->searchable()
+                    ->limit(5), // Biar nggak kepanjangan kalau banyak kategori
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()

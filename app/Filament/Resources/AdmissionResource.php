@@ -33,10 +33,10 @@ class AdmissionResource extends Resource
                 Forms\Components\FileUpload::make('image1')
                     ->image()
                     ->required()
-                    ->maxLength(255),
+                    ->maxSize(2048),
                 Forms\Components\FileUpload::make('image2')
                     ->image()
-                    ->maxLength(255),
+                    ->maxSize(2048),
             ]);
     }
 
@@ -48,9 +48,9 @@ class AdmissionResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('content')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('image1')
+                Tables\Columns\ImageColumn::make('image1')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('image2')
+                Tables\Columns\ImageColumn::make('image2')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()

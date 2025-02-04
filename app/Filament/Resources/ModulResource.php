@@ -26,12 +26,18 @@ class ModulResource extends Resource
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('pdf')
+                Forms\Components\FileUpload::make('pdf')
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('grade_id')
-                    ->required()
-                    ->numeric(),
+                    ->rules([
+                        'max:2048', // Maksimal 2MB (2048KB)
+                        'mimes:pdf,docx,doc,rtf' // Hanya file PDF, DOCX, DOC, atau RTF yang diterima
+                    ]),
+                    Forms\Components\Select::make('grade_id')
+                    ->label('Kelas') // Label untuk tampilan lebih jelas
+                    ->relationship('grade', 'name') // Mengambil nama kategori, bukan ID
+                    ->searchable() // Memudahkan pencarian kategori jika ada banyak
+                    ->preload() // Memuat opsi saat pertama kali dibuka
+                    ->required(),
             ]);
     }
 
@@ -43,8 +49,7 @@ class ModulResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('pdf')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('grade_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('grade.name')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()

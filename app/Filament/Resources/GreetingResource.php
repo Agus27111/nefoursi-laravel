@@ -30,9 +30,12 @@ class GreetingResource extends Resource
                 TinyEditor::make('content')
                     ->required()
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('principal_id')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\Select::make('principal_id')
+                    ->label('Principal') // Label untuk tampilan lebih jelas
+                    ->relationship('principal', 'name') // Mengambil nama kategori, bukan ID
+                    ->searchable() // Memudahkan pencarian kategori jika ada banyak
+                    ->preload() // Memuat opsi saat pertama kali dibuka
+                    ->required(),
             ]);
     }
 
@@ -40,8 +43,7 @@ class GreetingResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('principal_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('principal.name')
                     ->sortable(),
                 Tables\Columns\ImageColumn::make('image'),
                 Tables\Columns\TextColumn::make('content')
